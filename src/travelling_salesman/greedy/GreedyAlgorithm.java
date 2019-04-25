@@ -1,5 +1,7 @@
 package travelling_salesman.greedy;
 
+import travelling_salesman.DistancesParser;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -25,39 +27,11 @@ public class GreedyAlgorithm {
 
     public static int[] solve(String file_path, int idxStart, Integer numCities) {
         int[] dNumCities = new int[]{numCities};
-        int[][] distances = parseDistances(file_path, dNumCities);
+        int[][] distances = DistancesParser.parseDistances(file_path, dNumCities);
         return GreedyAlgorithm.solve(distances, idxStart, dNumCities[0]);
     }
 
-    public static int[][] parseDistances(String file_path, int[] numCities) {
-        int realNumCities = numCities[0];
-        int[][] distances = null;
-        BufferedReader br;
-        try {
-            br = new BufferedReader(new FileReader(file_path));
-            String line = br.readLine();
-            if (realNumCities == -1) {
-                realNumCities = line.length() - line.replace(",", "").length() + 1;
-                numCities[0] = realNumCities;
-            }
-            distances = new int[realNumCities][realNumCities];
-            int row = 0;
-            int col = 0;
 
-            while (line != null && row < realNumCities) {
-                for (String element : line.split(",")) {
-                    if(col >= realNumCities) break;
-                    distances[row][col++] = Integer.parseInt(element);
-                }
-                col = 0;
-                row++;
-                line = br.readLine();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return distances;
-    }
 
     private static int findShortestDistance(int[] route, int[] row){
         double current_minimum = Double.POSITIVE_INFINITY;
