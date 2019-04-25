@@ -30,7 +30,7 @@ public class TestTravelling {
     @org.junit.jupiter.api.Test
     void test_completeEnumeration(){
         String filePath = "Resources/distances.txt";
-        int[] route = CompleteEnumeration.solve(filePath, 0, 2);
+        int[] route = CompleteEnumeration.solve(filePath, 0, 14);
         System.out.println(Arrays.toString(route));
     }
 }
