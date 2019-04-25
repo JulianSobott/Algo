@@ -1,6 +1,7 @@
 package travelling_salesman.greedy;
 
 import travelling_salesman.DistancesParser;
+import travelling_salesman.Utils;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -15,7 +16,7 @@ public class GreedyAlgorithm {
         int numVisited = 0;
         int idxCurrent = idxStart;
         while (numVisited + 1 < numCities){
-            idxCurrent = findShortestDistance(route, distances[idxCurrent]);
+            idxCurrent = Utils.findShortestDistance(route, distances[idxCurrent]);
             if(idxCurrent != -1){
                 route[numVisited++ + 1] = idxCurrent;
             }else{
@@ -29,33 +30,5 @@ public class GreedyAlgorithm {
         int[] dNumCities = new int[]{numCities};
         int[][] distances = DistancesParser.parseDistances(file_path, dNumCities);
         return GreedyAlgorithm.solve(distances, idxStart, dNumCities[0]);
-    }
-
-
-
-    private static int findShortestDistance(int[] route, int[] row){
-        double current_minimum = Double.POSITIVE_INFINITY;
-        int currentIdx = 0;
-        int idxCity = -1;
-
-        for(int distance : row){
-            if(distance != 0 && !contains(route, currentIdx)){
-                if(distance < current_minimum){
-                    current_minimum = distance;
-                    idxCity = currentIdx;
-                }
-            }
-            currentIdx++;
-        }
-        return idxCity;
-    }
-
-    static boolean contains(int route[], int idx){
-        for(int v : route){
-            if(v == idx){
-                return true;
-            }
-        }
-        return false;
     }
 }
